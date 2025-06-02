@@ -2,21 +2,26 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>PEMABAG - Prix d'Excellence Éducative</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: #333;
             background: #f8f9fa;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .container {
@@ -25,7 +30,7 @@
             padding: 0 20px;
         }
         
-        /* Animations de fond */
+        /* Animations de fond optimisées pour mobile */
         .floating-shapes {
             position: absolute;
             top: 0;
@@ -34,58 +39,53 @@
             height: 100%;
             overflow: hidden;
             z-index: -1;
+            pointer-events: none;
         }
         
         .shape {
             position: absolute;
             border-radius: 50%;
-            animation: float 20s infinite linear;
             opacity: 0.1;
+            will-change: transform;
         }
         
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
+        @media (min-width: 769px) {
+            .shape {
+                animation: float 20s infinite linear;
+            }
+            
+            .shape:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(45deg, #ffd700, #ffed4e);
+                top: 20%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+            
+            .shape:nth-child(2) {
+                width: 120px;
+                height: 120px;
+                background: linear-gradient(45deg, #4facfe, #00f2fe);
+                top: 60%;
+                left: 80%;
+                animation-delay: -7s;
+            }
+            
+            .shape:nth-child(3) {
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(45deg, #43e97b, #38f9d7);
+                top: 40%;
+                left: 70%;
+                animation-delay: -14s;
+            }
         }
         
-        .shape:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            top: 60%;
-            left: 80%;
-            animation-delay: -7s;
-        }
-        
-        .shape:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #43e97b, #38f9d7);
-            top: 40%;
-            left: 70%;
-            animation-delay: -14s;
-        }
-        
-        .shape:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #fa709a, #fee140);
-            top: 80%;
-            left: 20%;
-            animation-delay: -3s;
-        }
-        
-        .shape:nth-child(5) {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(45deg, #a8edea, #fed6e3);
-            top: 10%;
-            left: 60%;
-            animation-delay: -10s;
+        @media (max-width: 768px) {
+            .shape {
+                display: none;
+            }
         }
         
         @keyframes float {
@@ -97,29 +97,7 @@
             }
         }
         
-        /* Particules d'étoiles */
-        .stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-        
-        /* Header amélioré */
+        /* Header responsive */
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: white;
@@ -128,31 +106,34 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             background: linear-gradient(45deg, #ffd700, #ffed4e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-decoration: none;
+            z-index: 1002;
         }
         
+        /* Desktop menu */
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
         }
         
         .nav-item {
@@ -162,33 +143,32 @@
         .nav-link {
             color: white;
             text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             transition: all 0.2s ease;
             font-weight: 500;
-            position: relative;
+            display: block;
+            white-space: nowrap;
         }
         
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.1);
-            color: #ffd700;
         }
         
-        /* Dropdown amélioré */
+        /* Dropdown menu desktop */
         .dropdown {
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            min-width: 220px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-radius: 10px;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.2s ease;
-            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 0.5rem;
         }
         
         .nav-item:hover .dropdown {
@@ -199,24 +179,110 @@
         
         .dropdown a {
             display: block;
-            padding: 12px 20px;
+            padding: 10px 20px;
             color: #333;
             text-decoration: none;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.2s ease;
         }
         
         .dropdown a:hover {
             background: #f8f9fa;
             color: #667eea;
-            padding-left: 25px;
         }
         
-        .dropdown a:last-child {
-            border-bottom: none;
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+            z-index: 1002;
         }
         
-        /* Hero Section spectaculaire */
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                z-index: 1001;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-item {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-link {
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+            }
+            
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                background: rgba(255, 255, 255, 0.1);
+                box-shadow: none;
+                margin: 0.5rem 1rem;
+                display: none;
+            }
+            
+            .nav-item.active .dropdown {
+                display: block;
+            }
+            
+            .dropdown a {
+                color: white;
+                padding: 0.8rem;
+            }
+            
+            .dropdown a:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .mobile-menu-btn.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu-btn.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-btn.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+        }
+        
+        /* Hero Section responsive */
         .hero {
             background: linear-gradient(135deg, 
                 rgba(102, 126, 234, 0.9) 0%, 
@@ -224,7 +290,7 @@
                 rgba(240, 147, 251, 0.9) 50%,
                 rgba(245, 101, 101, 0.9) 75%,
                 rgba(254, 218, 117, 0.9) 100%);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -232,197 +298,76 @@
             color: white;
             position: relative;
             overflow: hidden;
+            padding: 80px 20px 40px;
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="150" r="100" fill="url(%23grad1)"/><circle cx="800" cy="400" r="120" fill="url(%23grad1)"/><circle cx="1000" cy="200" r="80" fill="url(%23grad1)"/><circle cx="400" cy="500" r="90" fill="url(%23grad1)"/></svg>') center/cover;
-            animation: backgroundMove 20s ease-in-out infinite;
-        }
-        
-        @keyframes backgroundMove {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            25% { transform: translateX(-20px) translateY(-10px); }
-            50% { transform: translateX(20px) translateY(10px); }
-            75% { transform: translateX(-10px) translateY(20px); }
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                min-height: -webkit-fill-available;
+            }
         }
         
         .hero-content {
             position: relative;
             z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
         }
         
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             animation: titleAnimation 2s ease-out;
-            background: linear-gradient(45deg, #fff, #ffd700, #fff);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleGradient 3s ease-in-out infinite;
-        }
-        
-        @keyframes titleGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
         
         @keyframes titleAnimation {
             0% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.8);
+                transform: translateY(30px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
         
         .hero-content .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            margin-bottom: 1.5rem;
             opacity: 0.95;
             animation: fadeInUp 1.5s ease-out 0.5s both;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
         .hero-content .description {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             max-width: 800px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             animation: fadeInUp 1.5s ease-out 1s both;
             line-height: 1.8;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            padding: 0 1rem;
         }
         
         .cta-button {
             display: inline-block;
             background: linear-gradient(45deg, #ffd700, #ffed4e);
             color: #1e3c72;
-            padding: 18px 40px;
+            padding: 14px 30px;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.4s ease;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            transition: all 0.3s ease;
             animation: buttonFloat 1.5s ease-out 1.5s both;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.6s;
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
         
         .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
         }
         
-        @keyframes buttonFloat {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Illustrations animées */
-        .hero-illustrations {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .illustration {
-            position: absolute;
-            font-size: 4rem;
-            opacity: 0.1;
-            animation: floatIllustration 15s infinite ease-in-out;
-        }
-        
-        .illustration:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .illustration:nth-child(2) { top: 20%; right: 10%; animation-delay: -3s; }
-        .illustration:nth-child(3) { bottom: 20%; left: 8%; animation-delay: -6s; }
-        .illustration:nth-child(4) { bottom: 15%; right: 5%; animation-delay: -9s; }
-        .illustration:nth-child(5) { top: 50%; left: 3%; animation-delay: -12s; }
-        .illustration:nth-child(6) { top: 60%; right: 3%; animation-delay: -15s; }
-        
-        @keyframes floatIllustration {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(5deg); }
-            66% { transform: translateY(10px) rotate(-3deg); }
-        }
-        
-        /* Main Content */
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-            position: relative;
-        }
-        
-        .section {
-            display: none;
-            padding: 6rem 0;
-            animation: sectionSlideIn 0.8s ease-out;
-            position: relative;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes sectionSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 4rem;
-            position: relative;
-            animation: titleAppear 1s ease-out;
-        }
-        
-        @keyframes titleAppear {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -433,364 +378,37 @@
             }
         }
         
-        .section-title::after {
-            content: '';
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
-            display: block;
-            margin: 2rem auto;
-            border-radius: 2px;
-            animation: lineGrow 1s ease-out 0.5s both;
+        @keyframes buttonFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes lineGrow {
-            from { width: 0; }
-            to { width: 100px; }
+        /* Sections principales */
+        main {
+            margin-top: 60px;
+            min-height: calc(100vh - 60px);
         }
         
-        /* Mission Section avec animations */
-        .mission-section {
-            background: linear-gradient(135deg, #f093fb 0%, #f5f7fa 100%);
-            border-radius: 30px;
-            padding: 4rem 2rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .mission-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: rotateBackground 20s linear infinite;
-        }
-        
-        @keyframes rotateBackground {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        /* About Cards améliorées */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-        
-        .about-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .about-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-        
-        .about-card:hover::before {
-            transform: translateX(0);
-        }
-        
-        .about-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-        
-        .about-card .icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            animation: iconBounce 2s ease-in-out infinite;
-        }
-        
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .about-card:nth-child(1) .icon { animation-delay: 0s; }
-        .about-card:nth-child(2) .icon { animation-delay: 0.3s; }
-        .about-card:nth-child(3) .icon { animation-delay: 0.6s; }
-        
-        .about-card h3 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-            position: relative;
-        }
-        
-        .about-card p {
-            color: #666;
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-        
-        /* Years Cards avec effets */
-        .years-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-        }
-        
-        .year-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .year-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-        
-        .year-card:hover::before {
-            transform: translateX(100%);
-        }
-        
-        .year-card:hover {
-            transform: translateY(-10px) rotateY(5deg);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-        
-        .year-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-        
-        .year-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #764ba2;
-        }
-        
-        .year-header h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .year-content {
-            padding: 2rem;
-        }
-        
-        .laureate {
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 12px;
-            border-left: 5px solid #ffd700;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .laureate::before {
-            content: '🏆';
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
-            opacity: 0.3;
-        }
-        
-        .laureate:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .laureate-name {
-            font-weight: bold;
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .laureate-school {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* Contact Cards */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-        }
-        
-        .contact-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-        
-        .contact-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: inline-block;
-            animation: iconPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .contact-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1e3c72;
-            margin-bottom: 1rem;
-        }
-        
-        .contact-info {
-            color: #666;
-            line-height: 2;
-        }
-        
-        .contact-info a {
-            color: #667eea;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .contact-info a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-        
-        /* Footer stylé */
-        footer {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            text-align: center;
+        .section {
+            display: none;
             padding: 3rem 0;
-            margin-top: 6rem;
-            position: relative;
-            overflow: hidden;
+            animation: sectionSlideIn 0.6s ease-out;
         }
         
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><path d="M0,100 C300,200 900,0 1200,100 L1200,300 L0,300 Z" fill="rgba(255,255,255,0.05)"/></svg>') center/cover;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .footer-section h4 {
-            color: #ffd700;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-        
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
+        .section.active {
             display: block;
-            margin-bottom: 0.8rem;
-            transition: all 0.3s ease;
-            position: relative;
-            padding-left: 20px;
         }
         
-        .footer-section a::before {
-            content: '▶';
-            position: absolute;
-            left: 0;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-        }
-        
-        .footer-section a:hover {
-            color: #ffd700;
-            padding-left: 25px;
-        }
-        
-        .footer-section a:hover::before {
-            left: 5px;
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 2rem;
-            color: #ccc;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Animations globales */
-        @keyframes fadeInUp {
+        @keyframes sectionSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -798,89 +416,306 @@
             }
         }
         
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 3rem);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+        
+        /* Mission Section */
+        .mission-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5f7fa 100%);
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Cards responsive */
+        .about-grid,
+        .years-grid,
+        .contact-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .about-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        
+        .years-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .contact-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        .about-card,
+        .year-card,
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .about-card:hover,
+        .year-card:hover,
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .about-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        .about-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .about-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Year cards */
+        .year-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin: -2rem -1.5rem 1.5rem;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .year-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .laureate {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .laureate-name {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 0.3rem;
+        }
+        
+        .laureate-school {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Contact cards */
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .contact-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 0.8rem;
+        }
+        
+        .contact-info {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer responsive */
+        footer {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .footer-section h4 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            color: #ccc;
+            text-align: center;
+        }
+        
         /* Haiti flag accent */
         .haiti-accent {
             background: linear-gradient(45deg, #ce1126 50%, #004cff 50%);
-            height: 6px;
+            height: 4px;
             width: 100%;
-            position: relative;
         }
         
-        .haiti-accent::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: flagShine 3s ease-in-out infinite;
-        }
-        
-        @keyframes flagShine {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
-        }
-        
-        /* Mobile menu */
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-        
-        .bar {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: flex;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-content .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-            
-            .about-grid,
-            .years-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .illustration {
-                font-size: 2rem;
-            }
-        }
-        
-        /* Scroll animations */
+        /* Scroll reveal animations */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(30px);
             transition: all 0.6s ease;
         }
         
         .scroll-reveal.revealed {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Tablet specific */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Small mobile */
+        @media (max-width: 480px) {
+            header {
+                padding: 0.8rem 0;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .hero {
+                padding: 60px 15px 30px;
+            }
+            
+            .hero-content .description {
+                padding: 0;
+            }
+            
+            .cta-button {
+                padding: 12px 24px;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                margin-bottom: 2rem;
+            }
+            
+            .about-card,
+            .year-card,
+            .contact-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .mission-section {
+                padding: 2rem 1rem;
+                border-radius: 15px;
+            }
+            
+            footer {
+                padding: 1.5rem 0;
+            }
+            
+            .footer-content {
+                text-align: center;
+            }
+        }
+        
+        /* Optimisations pour éviter le scroll horizontal */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* Amélioration de la lisibilité sur mobile */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+        
+        /* Fix pour iOS */
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
         }
     </style>
 </head>
@@ -891,39 +726,39 @@
         <nav class="container">
             <a href="#" class="logo" onclick="showSection('accueil')">PEMABAG</a>
             
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('accueil')">🏠 Accueil</a>
+                    <a href="#" class="nav-link" onclick="showSection('accueil'); closeMobileMenu()">🏠 Accueil</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" onclick="toggleDropdown(this)">
                     <a href="#" class="nav-link">📅 Années</a>
                     <div class="dropdown">
-                        <a href="#" onclick="showSection('annee-2024')">🏆 2024</a>
-                        <a href="#" onclick="showSection('annee-2023')">🥇 2023</a>
-                        <a href="#" onclick="showSection('annee-2022')">🎓 2022</a>
-                        <a href="#" onclick="showSection('annee-2021')">⭐ 2021</a>
-                        <a href="#" onclick="showSection('archives')">📚 Archives</a>
+                        <a href="#" onclick="showSection('annee-2024'); closeMobileMenu()">🏆 2024</a>
+                        <a href="#" onclick="showSection('annee-2023'); closeMobileMenu()">🥇 2023</a>
+                        <a href="#" onclick="showSection('annee-2022'); closeMobileMenu()">🎓 2022</a>
+                        <a href="#" onclick="showSection('annee-2021'); closeMobileMenu()">⭐ 2021</a>
+                        <a href="#" onclick="showSection('archives'); closeMobileMenu()">📚 Archives</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('apropos')">ℹ️ À propos</a>
+                    <a href="#" class="nav-link" onclick="showSection('apropos'); closeMobileMenu()">ℹ️ À propos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('laureats')">🏆 Lauréats</a>
+                    <a href="#" class="nav-link" onclick="showSection('laureats'); closeMobileMenu()">🏆 Lauréats</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('actualites')">📰 Actualités</a>
+                    <a href="#" class="nav-link" onclick="showSection('actualites'); closeMobileMenu()">📰 Actualités</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('contact')">📞 Contact</a>
+                    <a href="#" class="nav-link" onclick="showSection('contact'); closeMobileMenu()">📞 Contact</a>
                 </li>
             </ul>
             
-            <div class="mobile-menu" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
-            </div>
+            </button>
         </nav>
     </header>
 
@@ -935,19 +770,6 @@
                     <div class="shape"></div>
                     <div class="shape"></div>
                     <div class="shape"></div>
-                    <div class="shape"></div>
-                    <div class="shape"></div>
-                </div>
-                
-                <div class="stars" id="stars"></div>
-                
-                <div class="hero-illustrations">
-                    <div class="illustration">🎓</div>
-                    <div class="illustration">📚</div>
-                    <div class="illustration">🏆</div>
-                    <div class="illustration">⭐</div>
-                    <div class="illustration">🌟</div>
-                    <div class="illustration">💫</div>
                 </div>
                 
                 <div class="hero-content">
@@ -956,11 +778,10 @@
                     <p class="description">
                         L'éducation est la lumière qui illumine l'avenir d'une nation. Depuis 2021, PEMABAG 
                         cultive cette flamme en récompensant l'excellence académique des meilleurs étudiants 
-                        du Baccalauréat Unique dans la Vallée de Jacmel. Car nous croyons que chaque esprit 
-                        brillant formé aujourd'hui devient le pilier du Haïti de demain.
+                        du Baccalauréat Unique dans la Vallée de Jacmel.
                     </p>
                     <a href="#" class="cta-button" onclick="showSection('laureats')">
-                        ✨ Découvrir nos Lauréats ✨
+                        ✨ Découvrir nos Lauréats
                     </a>
                 </div>
             </div>
@@ -972,17 +793,17 @@
                         <div class="about-card scroll-reveal">
                             <div class="icon">🎓</div>
                             <h3>Excellence Académique</h3>
-                            <p>L'excellence n'est pas un hasard, c'est le fruit de la discipline, de la passion et de la persévérance. Nous célébrons ceux qui transforment leurs rêves en réalité par l'étude, car l'éducation est l'investissement le plus rentable qu'une société puisse faire.</p>
+                            <p>L'excellence n'est pas un hasard, c'est le fruit de la discipline, de la passion et de la persévérance. Nous célébrons ceux qui transforment leurs rêves en réalité par l'étude.</p>
                         </div>
                         <div class="about-card scroll-reveal">
                             <div class="icon">💡</div>
                             <h3>Éveil des Consciences</h3>
-                            <p>Éduquer, c'est planter des graines de changement dans l'esprit des jeunes. Chaque lauréat PEMABAG devient un catalyseur de transformation, prouvant que l'éducation brise les chaînes de la pauvreté et ouvre les portes de l'impossible.</p>
+                            <p>Éduquer, c'est planter des graines de changement dans l'esprit des jeunes. Chaque lauréat PEMABAG devient un catalyseur de transformation.</p>
                         </div>
                         <div class="about-card scroll-reveal">
                             <div class="icon">🌟</div>
                             <h3>Héritage Vivant</h3>
-                            <p>Nous ne formons pas seulement des diplômés, nous forgeons des leaders conscients de leur responsabilité envers leur communauté. Car l'éducation véritable ne s'arrête pas aux murs de l'école : elle se vit, se partage et se perpétue de génération en génération.</p>
+                            <p>Nous ne formons pas seulement des diplômés, nous forgeons des leaders conscients de leur responsabilité envers leur communauté.</p>
                         </div>
                     </div>
                 </section>
@@ -997,17 +818,17 @@
                     <div class="about-card scroll-reveal">
                         <div class="icon">📜</div>
                         <h3>Une Vision Transformatrice</h3>
-                        <p>Né en 2021 de la conviction que l'éducation est l'arme la plus puissante pour changer le monde, PEMABAG incarne l'espoir d'un Haïti où chaque talent a sa chance de briller. Car nous savons que derrière chaque grande nation se cachent des générations d'esprits cultivés et visionnaires.</p>
+                        <p>Né en 2021 de la conviction que l'éducation est l'arme la plus puissante pour changer le monde, PEMABAG incarne l'espoir d'un Haïti où chaque talent a sa chance de briller.</p>
                     </div>
                     <div class="about-card scroll-reveal">
                         <div class="icon">🎯</div>
                         <h3>L'Excellence comme Boussole</h3>
-                        <p>Nos critères de sélection reflètent notre philosophie : l'excellence ne se mesure pas seulement aux notes, mais à l'engagement, à l'intégrité et à la capacité d'impact. Nous cherchons des diamants bruts qui, une fois polis par l'éducation, illumineront leur communauté tout entière.</p>
+                        <p>Nos critères de sélection reflètent notre philosophie : l'excellence ne se mesure pas seulement aux notes, mais à l'engagement, à l'intégrité et à la capacité d'impact.</p>
                     </div>
                     <div class="about-card scroll-reveal">
                         <div class="icon">🤝</div>
                         <h3>Écosystème de Réussite</h3>
-                        <p>L'éducation est un projet collectif. C'est pourquoi PEMABAG fédère familles, écoles, universités et diaspora autour d'une vision commune : faire de chaque jeune haïtien un acteur du développement durable de son pays. Ensemble, nous bâtissons l'avenir.</p>
+                        <p>L'éducation est un projet collectif. C'est pourquoi PEMABAG fédère familles, écoles, universités et diaspora autour d'une vision commune.</p>
                     </div>
                 </div>
             </div>
@@ -1028,7 +849,7 @@
                                 <div class="laureate-name">Marie-Claire Joseph</div>
                                 <div class="laureate-school">Lycée de la Vallée - Moyenne: 18.5/20</div>
                                 <p style="margin-top: 10px; font-style: italic; color: #555;">
-                                    "L'éducation m'a donné des ailes pour voler vers mes rêves" - Une étudiante brillante qui prouve que l'excellence académique ouvre toutes les portes, y compris celles de la médecine qu'elle étudie aujourd'hui avec passion.
+                                    "L'éducation m'a donné des ailes pour voler vers mes rêves"
                                 </p>
                             </div>
                         </div>
@@ -1043,7 +864,7 @@
                                 <div class="laureate-name">Jean-Baptiste Pierre</div>
                                 <div class="laureate-school">Institution Mixte Moderne - Moyenne: 17.8/20</div>
                                 <p style="margin-top: 10px; font-style: italic; color: #555;">
-                                    "Les mathématiques sont le langage de l'univers, et je veux parler couramment cette langue" - Un génie en sciences qui rêve de révolutionner l'ingénierie haïtienne par l'innovation technologique.
+                                    "Les mathématiques sont le langage de l'univers"
                                 </p>
                             </div>
                         </div>
@@ -1058,12 +879,55 @@
                                 <div class="laureate-name">Roseline Augustin</div>
                                 <div class="laureate-school">Collège Évangélique - Moyenne: 17.2/20</div>
                                 <p style="margin-top: 10px; font-style: italic; color: #555;">
-                                    "Les mots ont le pouvoir de changer le monde, et je veux être celle qui raconte l'histoire du nouveau Haïti" - Une plume prometteuse qui aspire à donner une voix aux sans-voix à travers le journalisme.
+                                    "Les mots ont le pouvoir de changer le monde"
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Autres sections -->
+        <section id="annee-2023" class="section">
+            <div class="container">
+                <h2 class="section-title">🥇 Lauréats 2023</h2>
+                <p style="text-align: center; color: #666;">Contenu à venir...</p>
+            </div>
+        </section>
+
+        <section id="annee-2022" class="section">
+            <div class="container">
+                <h2 class="section-title">🎓 Lauréats 2022</h2>
+                <p style="text-align: center; color: #666;">Contenu à venir...</p>
+            </div>
+        </section>
+
+        <section id="annee-2021" class="section">
+            <div class="container">
+                <h2 class="section-title">⭐ Lauréats 2021</h2>
+                <p style="text-align: center; color: #666;">Contenu à venir...</p>
+            </div>
+        </section>
+
+        <section id="archives" class="section">
+            <div class="container">
+                <h2 class="section-title">📚 Archives</h2>
+                <p style="text-align: center; color: #666;">Archives complètes à venir...</p>
+            </div>
+        </section>
+
+        <section id="laureats" class="section">
+            <div class="container">
+                <h2 class="section-title">🏆 Tous nos Lauréats</h2>
+                <p style="text-align: center; color: #666;">Liste complète des lauréats depuis 2021...</p>
+            </div>
+        </section>
+
+        <section id="actualites" class="section">
+            <div class="container">
+                <h2 class="section-title">📰 Actualités</h2>
+                <p style="text-align: center; color: #666;">Dernières nouvelles et événements...</p>
             </div>
         </section>
 
@@ -1125,33 +989,57 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 PEMABAG - Prix d'Excellence Marianne Anna Badio Gabriel. Tous droits réservés.</p>
+                <p>&copy; 2024 PEMABAG - Prix d'Excellence Marianne Anna Badio Gabriel</p>
                 <p>Organisation à but non lucratif - Vallée de Jacmel, Haïti 🇭🇹</p>
-                <p style="margin-top: 15px; font-style: italic; font-size: 1.1rem; color: #ffd700;">
-                    "L'éducation est l'arme la plus puissante qu'on puisse utiliser pour changer le monde" - Nelson Mandela
-                </p>
-                <p style="margin-top: 10px; font-style: italic; opacity: 0.8;">
-                    Parce que chaque esprit éduqué aujourd'hui construit le Haïti de demain
+                <p style="margin-top: 10px; font-style: italic; color: #ffd700;">
+                    "L'éducation est l'arme la plus puissante qu'on puisse utiliser pour changer le monde"
                 </p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Créer les étoiles dans le hero
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
+        // Variables globales
+        let isMobileMenuOpen = false;
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            isMobileMenuOpen = !isMobileMenuOpen;
+            
+            if (isMobileMenuOpen) {
+                navMenu.classList.add('active');
+                mobileMenuBtn.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
         
-        // Navigation entre les sections
+        // Close mobile menu
+        function closeMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            navMenu.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+            isMobileMenuOpen = false;
+        }
+        
+        // Toggle dropdown on mobile
+        function toggleDropdown(navItem) {
+            if (window.innerWidth <= 768) {
+                event.preventDefault();
+                navItem.classList.toggle('active');
+            }
+        }
+        
+        // Navigation entre sections
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
@@ -1163,6 +1051,7 @@
                 targetSection.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 
+                // Reveal animations
                 setTimeout(() => {
                     revealOnScroll();
                 }, 100);
@@ -1183,28 +1072,70 @@
             });
         }
         
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navMenu = document.querySelector('.nav-menu');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-        }
-        
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            createStars();
+            // Scroll reveal
             window.addEventListener('scroll', revealOnScroll);
-            setTimeout(revealOnScroll, 500);
+            setTimeout(revealOnScroll, 300);
             
-            // Effet de parallaxe
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.hero');
-                if (parallax) {
-                    const speed = scrolled * 0.5;
-                    parallax.style.transform = `translateY(${speed}px)`;
+            // Fermer le menu mobile en cliquant en dehors
+            document.addEventListener('click', function(event) {
+                const navMenu = document.getElementById('navMenu');
+                const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                
+                if (isMobileMenuOpen && 
+                    !navMenu.contains(event.target) && 
+                    !mobileMenuBtn.contains(event.target)) {
+                    closeMobileMenu();
                 }
             });
+            
+            // Gérer le redimensionnement de la fenêtre
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (window.innerWidth > 768) {
+                        closeMobileMenu();
+                    }
+                }, 250);
+            });
+            
+            // Empêcher le scroll du body quand le menu est ouvert
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768 && !this.nextElementSibling) {
+                        e.preventDefault();
+                    }
+                });
+            });
         });
+        
+        // Gestion du viewport height sur mobile
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setViewportHeight();
+        window.addEventListener('resize', setViewportHeight);
+        
+        // Désactiver le zoom sur double tap (iOS)
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
